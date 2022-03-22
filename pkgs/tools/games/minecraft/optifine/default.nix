@@ -3,7 +3,12 @@
 }:
 
 recurseIntoAttrs rec {
-  optifine-latest = optifine_1_18_1;
+  optifine-latest = optifine_1_18_2;
+
+  optifine_1_18_2 = callPackage ./generic.nix {
+    version = "1.18.2_HD_U_H6";
+    sha256 = "0p78v71r5bz981id6hf2qq8cj8amxrxdh3nfzi3rc7n7zfnmqhn3";
+  };
 
   optifine_1_18_1 = callPackage ./generic.nix {
     version = "1.18.1_HD_U_H4";
