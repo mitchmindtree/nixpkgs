@@ -1,5 +1,6 @@
 { stdenv
 , lib
+, fetchFromGitLab
 , fetchurl
 , fetchpatch
 , gettext
@@ -9,6 +10,7 @@
 , gnome
 , glib
 , gtk3
+, gtk4
 , gobject-introspection
 , vala
 , python3
@@ -27,13 +29,21 @@
 
 stdenv.mkDerivation rec {
   pname = "vte";
-  version = "0.68.0";
+  # version = "0.68.0";
+  version = "master";
 
   outputs = [ "out" "dev" ];
 
-  src = fetchurl {
-    url = "mirror://gnome/sources/${pname}/${lib.versions.majorMinor version}/${pname}-${version}.tar.xz";
-    sha256 = "sha256-E+fUeJyiFqM3gAMNJGybE92/0ECUxjFu6n/5IoTdF0k=";
+  # src = fetchurl {
+  #   url = "mirror://gnome/sources/${pname}/${lib.versions.majorMinor version}/${pname}-${version}.tar.xz";
+  #   sha256 = "sha256-E+fUeJyiFqM3gAMNJGybE92/0ECUxjFu6n/5IoTdF0k=";
+  # };
+  src = fetchFromGitLab {
+    domain = "gitlab.gnome.org";
+    owner = "gnome";
+    repo = "vte";
+    rev = "1398ac862fb10b3cb7cdfc8267be2df5d5f39eb5";
+    sha256 = "sha256-hFCHlbKDNpFTk2CzXjvshXwf7pmjGzwVfufhb8GTZKA=";
   };
 
   patches = [
@@ -62,6 +72,7 @@ stdenv.mkDerivation rec {
   buildInputs = [
     fribidi
     gnutls
+    gtk4
     pcre2
     zlib
     icu
@@ -72,12 +83,15 @@ stdenv.mkDerivation rec {
   propagatedBuildInputs = [
     # Required by vte-2.91.pc.
     gtk3
+    gtk4
     glib
     pango
   ];
 
   mesonFlags = lib.optionals (!systemdSupport) [
     "-D_systemd=false"
+  ] ++ [
+    "-Dgtk4=true"
   ];
 
   postPatch = ''
