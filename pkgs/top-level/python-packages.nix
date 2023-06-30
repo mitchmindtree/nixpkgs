@@ -6726,6 +6726,8 @@ self: super: with self; {
 
   nbsphinx = callPackage ../development/python-modules/nbsphinx { };
 
+  nbtlib = callPackage ../development/python-modules/nbtlib { };
+
   nbval = callPackage ../development/python-modules/nbval { };
 
   nbxmpp = callPackage ../development/python-modules/nbxmpp { };
