@@ -4,7 +4,7 @@
   fetchurl,
 }:
 appimageTools.wrapType2 rec {
-  pname = "railway-wallet";
+  pname = "railway-wallet-bin";
   version = "5.17.10";
 
   src = fetchurl {
