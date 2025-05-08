@@ -31,6 +31,7 @@
   expat,
   makeWrapper,
   nix-update-script,
+  hvcc,
 }:
 let
   version = "0.9.1";
@@ -140,6 +141,7 @@ stdenv.mkDerivation {
     wrapProgram $out/bin/plugdata \
       --prefix PATH : '${
         lib.makeBinPath [
+          hvcc
           zenity
         ]
       }'
